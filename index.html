@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Mythologies of the World — Digital Presence Matrix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F2EBD9;
+    --paper-dark: #E8DEC6;
+    --ink: #1F1611;
+    --ink-soft: #3A2E22;
+    --terracotta: #8B3A2F;
+    --muted: #6B5D4F;
+    --line: #C9BB9E;
+    --grain: rgba(31, 22, 17, 0.04);
+
+    --display: 'Cormorant Garamond', Georgia, serif;
+    --body: 'Spectral', Georgia, serif;
+    --mono: 'JetBrains Mono', monospace;
+
+    --tier1: #2D5A3D;
+    --tier2: #8B6914;
+    --tier3: #8B3A2F;
+    --tier4: #4A3850;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--ink);
+    color: var(--ink);
+    font-family: var(--body);
+    font-weight: 400;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(circle at 20% 30%, var(--grain) 1px, transparent 2px),
+      radial-gradient(circle at 70% 60%, var(--grain) 1px, transparent 2px),
+      radial-gradient(circle at 40% 80%, var(--grain) 1px, transparent 2px);
+    background-size: 30px 30px, 40px 40px, 50px 50px;
+    z-index: 1000;
+    mix-blend-mode: multiply;
+    opacity: 0.6;
+  }
+
+  .slide {
+    background: var(--paper);
+    padding: clamp(28px, 4vw, 64px) clamp(28px, 5vw, 80px);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .slide-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: clamp(20px, 3vw, 32px);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .slide-header .meta { font-style: italic; text-transform: none; letter-spacing: 0.05em; }
+
+  h2 {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(28px, 4vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin-bottom: 0.6em;
+  }
+  h2 em { font-style: italic; color: var(--terracotta); font-weight: 400; }
+
+  .lede {
+    font-family: var(--display);
+    font-size: clamp(16px, 1.4vw, 20px);
+    font-style: italic;
+    color: var(--ink-soft);
+    margin-bottom: 1.5em;
+    max-width: 70ch;
+    line-height: 1.4;
+  }
+
+  .matrix-wrap {
+    overflow-x: auto;
+    margin-top: 1vh;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table.matrix {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: clamp(11px, 0.95vw, 14px);
+    background: rgba(255, 250, 235, 0.4);
+    min-width: 900px;
+  }
+  table.matrix th, table.matrix td {
+    padding: 9px 11px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.matrix th {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1.5px solid var(--ink);
+    font-weight: 500;
+    background: var(--paper-dark);
+    position: sticky;
+    top: 0;
+  }
+  table.matrix td .nm {
+    font-family: var(--display);
+    font-weight: 600;
+    color: var(--ink);
+    font-size: clamp(13px, 1.05vw, 16px);
+  }
+  table.matrix tr:hover { background: rgba(184, 93, 78, 0.08); }
+  table.matrix .tier-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  td.cell-tier1 .tier-dot { background: var(--tier1); }
+  td.cell-tier2 .tier-dot { background: var(--tier2); }
+  td.cell-tier3 .tier-dot { background: var(--tier3); }
+  td.cell-tier4 .tier-dot { background: var(--tier4); }
+
+  .legend {
+    display: flex;
+    gap: clamp(14px, 2vw, 28px);
+    flex-wrap: wrap;
+    margin-top: 1.5em;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .legend .swatch {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  .footer-note {
+    margin-top: 2em;
+    padding-top: 1em;
+    border-top: 1px dotted var(--line);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  @media (max-width: 768px) {
+    .slide { padding: 24px 16px; }
+    .matrix-wrap { margin: 0 -16px; padding: 0 16px; }
+  }
+
+  @media print {
+    body::before { display: none; }
+    .slide { min-height: auto; }
+    table.matrix th { position: static; }
+  }
+</style>
+</head>
+<body>
+
+<section class="slide">
+  <div class="slide-header">
+    <span>The master matrix · A digital presence inventory</span>
+    <span class="meta">Fourteen traditions × six attributes · May 2026</span>
+  </div>
+
+  <h2>One table, one row <em>per tradition.</em></h2>
+  <p class="lede">A baseline inventory of fourteen living mythological traditions and their current digital presence — what is available, in what language, recorded by whom, and through what access mode.</p>
+
+  <div class="matrix-wrap">
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th>Tradition</th>
+          <th>Tier</th>
+          <th>Digital?</th>
+          <th>Language(s)</th>
+          <th>Author / Source</th>
+          <th>Subject</th>
+          <th>Format</th>
+          <th>Access</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="cell-tier1"><span class="tier-dot"></span><span class="nm">Greek / Roman</span></td><td>I</td><td>Yes — saturated</td><td>EN, GR, LA</td><td>Public-domain translators; modern API authors</td><td>Pantheon, hero cycles, Homer, Ovid</td><td>Text, Audio, JSON</td><td>API ✓ Unstructured web presence ✓ Audio ✓</td></tr>
+        <tr><td class="cell-tier1"><span class="tier-dot"></span><span class="nm">Norse</span></td><td>I</td><td>Yes — saturated</td><td>EN, Old Norse, DE</td><td>Snorri Sturluson via translators; Padraic Colum; hobbyist APIs</td><td>Eddas, sagas, Ragnarök</td><td>Text, Audio, JSON</td><td>API △ Unstructured web presence ✓ Audio ✓</td></tr>
+        <tr><td class="cell-tier2"><span class="tier-dot"></span><span class="nm">Celtic (Irish/Welsh)</span></td><td>II</td><td>Yes</td><td>EN, Welsh, Irish</td><td>Mabinogion translators (Guest, Jones); Lady Gregory</td><td>Mabinogi, Ulster Cycle, Arthurian</td><td>Text, Audio</td><td>Unstructured web presence ✓ Audio ✓</td></tr>
+        <tr><td class="cell-tier2"><span class="tier-dot"></span><span class="nm">Slavic</span></td><td>III</td><td>Partial</td><td>EN, RU, PL, UK, CZ</td><td>Afanasyev (RU folktales); scholarly retellings</td><td>Baba Yaga, Perun, Veles, leshy</td><td>Text</td><td>Unstructured web presence △ (best in Slavic languages)</td></tr>
+        <tr><td class="cell-tier2"><span class="tier-dot"></span><span class="nm">Mesopotamian</span></td><td>II</td><td>Yes</td><td>EN, Akkadian, Sumerian</td><td>George (Gilgamesh); Kramer; ETCSL Oxford</td><td>Gilgamesh, Enuma Elish, Ishtar</td><td>Text</td><td>Unstructured web presence ✓ (ETCSL has structured corpus)</td></tr>
+        <tr><td class="cell-tier2"><span class="tier-dot"></span><span class="nm">Egyptian</span></td><td>II</td><td>Yes</td><td>EN (mostly Budge)</td><td>E.A.W. Budge (19th c., dated); modern academic</td><td>Osiris/Isis, Ra, Book of the Dead</td><td>Text, Image</td><td>Unstructured web presence ✓ (translation bias caveat)</td></tr>
+        <tr><td class="cell-tier2"><span class="tier-dot"></span><span class="nm">Hindu</span></td><td>II</td><td>Yes — massive</td><td>EN, Sanskrit, Hindi</td><td>Ganguli (Mahabharata); Griffith (Vedas)</td><td>Vedic gods, Mahabharata, Ramayana, Puranas</td><td>Text, Audio, Image</td><td>Unstructured web presence ✓ Audio △</td></tr>
+        <tr><td class="cell-tier2"><span class="tier-dot"></span><span class="nm">Chinese</span></td><td>II</td><td>Yes</td><td>中文, EN</td><td>Anonymous (山海经); 袁珂 annotations; Anne Birrell (EN)</td><td>Shan Hai Jing creatures, Nüwa, Houyi, Kua Fu</td><td>Text, Image</td><td>Unstructured web presence ✓ (ctext.org · Internet Archive)</td></tr>
+        <tr><td class="cell-tier2"><span class="tier-dot"></span><span class="nm">Japanese</span></td><td>II</td><td>Yes</td><td>EN, 日本語</td><td>Chamberlain (Kojiki); Lafcadio Hearn (folklore)</td><td>Amaterasu, Susano-o, oni and yokai</td><td>Text</td><td>Unstructured web presence ✓</td></tr>
+        <tr><td class="cell-tier3"><span class="tier-dot"></span><span class="nm">West African (Yoruba/Akan)</span></td><td>III</td><td>Partial</td><td>EN, Yoruba, Twi</td><td>Beckwith; Rattray; modern academic; diaspora sources</td><td>Orisha, Anansi, Mami Wata</td><td>Text</td><td>Unstructured web presence △ (provenance varies)</td></tr>
+        <tr><td class="cell-tier3"><span class="tier-dot"></span><span class="nm">Southern / Bantu</span></td><td>III</td><td>Sparse</td><td>EN, Zulu, Swahili</td><td>Mostly 20th-c. ethnographic</td><td>Unkulunkulu, ancestor cosmology</td><td>Text</td><td>Manual △</td></tr>
+        <tr><td class="cell-tier3"><span class="tier-dot"></span><span class="nm">Mesoamerican (Maya/Aztec)</span></td><td>II/III</td><td>Yes (Maya); thinner (Aztec)</td><td>EN, K'iche', Nahuatl, ES</td><td>Recinos, Tedlock, Christenson (Popol Vuh); Bierhorst (Aztec)</td><td>Hero Twins, Quetzalcoatl, Five Suns</td><td>Text, PDF scans</td><td>Download ✓ Unstructured web presence △</td></tr>
+        <tr><td class="cell-tier3"><span class="tier-dot"></span><span class="nm">Native North American</span></td><td>III</td><td>Yes — with caveats</td><td>EN (transcriptions)</td><td>Voth, Curtin, Mooney — 1880s–1930s ethnography</td><td>Emergence, trickster (Coyote, Raven), Hero Twins</td><td>Text</td><td>Unstructured web presence △ <strong>ethical caveat</strong></td></tr>
+        <tr><td class="cell-tier3"><span class="tier-dot"></span><span class="nm">Polynesian</span></td><td>III</td><td>Partial</td><td>EN, Hawaiian, Maori</td><td>Beckwith (Hawaiian); Grey (Maori)</td><td>Pele, Māui, creation chants</td><td>Text</td><td>Unstructured web presence ✓</td></tr>
+        <tr><td class="cell-tier4"><span class="tier-dot"></span><span class="nm">Aboriginal Australian</span></td><td>IV</td><td>Curated, permissioned</td><td>EN + ~250 Aboriginal languages</td><td><strong>Stories owned by communities</strong></td><td>Rainbow Serpent, Seven Sisters, Country-specific</td><td>Video, Audio</td><td><strong>License / partnership only</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="legend">
+    <span><span class="swatch" style="background: var(--tier1);"></span>Tier I · Saturated, queryable</span>
+    <span><span class="swatch" style="background: var(--tier2);"></span>Tier II · Text-present, structurally absent</span>
+    <span><span class="swatch" style="background: var(--tier3);"></span>Tier III · Fragmented, colonial-era dominant</span>
+    <span><span class="swatch" style="background: var(--tier4);"></span>Tier IV · Custodied, permissioned by design</span>
+  </div>
+
+  <div class="footer-note">
+    Sources verified May 2026 · Sacred-Texts · Project Gutenberg · Internet Archive · LibriVox · ctext.org · Ashliman Folktexts · Wikidata SPARQL · thedreamingstories.com · Common Ground AU
+  </div>
+</section>
+
+</body>
+</html>
